@@ -16,7 +16,7 @@ function getBooks() {
             dataType: 'json',
         })
         .done(function(data) {
-            console.log("success");
+            //console.log("success");
             $.each(data, function(key, val) {
                 var _table = $('#llistatLibres');
                 var row;
@@ -33,15 +33,58 @@ function getBooks() {
             $('.btn-info').click(showBook);
         })
         .fail(function() {
-            console.log("error");
+            //console.log("error");
             $('.alert alert-danger').show();
         })
         .always(function() {
-            console.log("complete");
+            //console.log("complete");
         });
 }
 
 function showBook(e) {
     var ID_LLIB = $(this).attr("value");
     //$('#myModalLabel').text("");
+    getDataBook(ID_LLIB);
+}
+
+function getDataBook(ID_LLIBRE) {
+    $.ajax({
+            url: 'getDataBook.php',
+            type: 'GET',
+            dataType: 'json',
+            data: { ID_LLIB: ID_LLIBRE },
+        })
+        .done(function(data) {
+            console.log("success");
+            console.log($(data));
+            $.each(data.LLIBRE, function(index, el) {
+                $('#CodiLlibre').val(el.ID_LLIB);
+                $('#Titol').val(el.TITOL || '');
+                $('#NumEdicio').val(el.NUMEDICIO || '');
+                $('#AnyEdicio').val(el.ANYEDICIO || '');
+                $('#Descripcio').val(el.DESCRIP_LLIB || '');
+                $('#ISBN').val(el.ISBN || '');
+                $('#DepositLegal').val(el.DEPLEGAL || '');
+                $('#SigTop').val(el.SIGNTOP || '');
+                console.log(el.FK_COLLECCIO);
+            });
+            $.each(data.COLLECCIONS, function(index, el) {
+                //  <option value="1">Option one</option>
+                $('#collecio')
+                    .append($("<option></option>")
+                        .attr("value", el.COLLECCIO)
+                        .text(el.COLLECCIO));
+                if (data.LLIBRE[0].FK_COLLECCIO != null && data.LLIBRE[0].FK_COLLECCIO == el.COLLECCIO) {
+                	$('#collecio option:last').attr("selected","selected");
+                }
+            });
+
+        })
+        .fail(function() {
+            console.log("error");
+        })
+        .always(function() {
+            console.log("complete");
+        });
+
 }

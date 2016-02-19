@@ -1,6 +1,5 @@
 <?php
 require_once "funcions.php";
-
 $mysqli = conecta();
 
 $sql = "SELECT ID_LLIB, TITOL FROM LLIBRES ORDER BY ID_LLIB  LIMIT 0, 10";
@@ -18,5 +17,5 @@ while ($stmt->fetch()) {
 
 echo json_encode($myArray);
 
-$stmt->close();
-$mysqli->close();
+//$stmt->close();
+//$mysqli->close();
