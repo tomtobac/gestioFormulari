@@ -1,0 +1,121 @@
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Modifica Llibre</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <fieldset>
+                        <!-- Form Name -->
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="CodiLlibre">Codi Llibre</label>
+                            <div class="col-md-2">
+                                <input id="CodiLlibre" name="CodiLlibre" type="text" placeholder="Codi" class="form-control input-md">
+                            </div>
+                            <label class="col-md-2 control-label" for="Titol">Títol</label>
+                            <div class="col-md-5">
+                                <input id="Titol" name="Titol" type="text" placeholder="Títol" class="form-control input-md">
+                            </div>
+                        </div>
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="NumEdicio">Num. Edició</label>
+                            <div class="col-md-3">
+                                <input id="NumEdicio" name="NumEdicio" type="number" placeholder="Num. Edició" class="form-control input-md">
+                            </div>
+                            <label class="col-md-3 control-label" for="AnyEdicio">Any. Edició</label>
+                            <div class="col-md-3">
+                                <input id="AnyEdicio" name="AnyEdicio" type="number" placeholder="Any. Edició" class="form-control input-md">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="textarea">Descripció</label>
+                            <div class="col-md-3">
+                                <textarea class="form-control" id="textarea" name="textarea"></textarea>
+                            </div>
+                            <label class="col-md-2 control-label" for="ISBN">ISBN</label>
+                            <div class="col-md-4">
+                                <input id="ISBN" name="ISBN" type="text" placeholder="ISBN" class="form-control input-md">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="NovaCollecio">Depòsit Legal</label>
+                            <div class="col-md-3">
+                                <input id="DepositLegal" name="DepositLegal" type="text" placeholder="Depòsit Legal" class="form-control input-md">
+                            </div>
+                            <label class="col-md-2 control-label" for="SigTop">Sig. Top.</label>
+                            <div class="col-md-4">
+                                <input id="SigTop" name="SigTop" type="text" placeholder="Sig. Top." class="form-control input-md">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label" for="collecio">Col·leció</label>
+                            <div class="col-md-4">
+                                <select id="collecio" name="collecio" class="form-control">
+                                    <option value="1">Option one</option>
+                                    <option value="2">Option two</option>
+                                </select>
+                            </div>
+                            <label class="col-md-2 control-label" for="Departament">Departament</label>
+                            <div class="col-md-4">
+                                <select id="Departament" name="Departament" class="form-control">
+                                    <option value="1">Option one</option>
+                                    <option value="2">Option two</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group hidden">
+                            <label class="col-md-3 control-label" for="NovaCollecio">Nova Col·leció</label>
+                            <div class="col-md-7">
+                                <input id="NovaCollecio" name="NovaCollecio" type="text" placeholder="Nova Col·leció" class="form-control input-md">
+                            </div>
+                            <div class="col-md-2">
+                                <button class="btn btn-primary btn-block">Afegir</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label" for="Editorial">Editorial</label>
+                            <div class="col-md-4">
+                                <select id="Editorial" name="Editorial" class="form-control">
+                                    <option value="1">Option one</option>
+                                    <option value="2">Option two</option>
+                                </select>
+                            </div>
+                            <label class="col-md-2 control-label" for="Llengua">Llengua</label>
+                            <div class="col-md-4">
+                                <select id="Llengua" name="Llengua" class="form-control">
+                                    <option value="1">Option one</option>
+                                    <option value="2">Option two</option>
+                                </select>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+                <table class="table table-striped table-bordered">
+                    <tr>
+                        <th>Id</th>
+                        <th>Nom Autor</th>
+                        <th>Nacionalitat</th>
+                        <th>Data Naix.</th>
+                        <th>Opcions</th>
+                    </tr>
+                </table>
+                <table class="table table-striped table-bordered">
+                    <tr>
+                        <th>Examplar</th>
+                        <th>Opcions</th>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Tanca</button>
+                <button type="button" class="btn btn-primary">Edita</button>
+            </div>
+        </div>
+    </div>
+</div>
