@@ -32,9 +32,9 @@ while ($stmt->fetch()) {
      "DATBAIXA_LLIB" => $DATBAIXA_LLIB, 
      "MOTIUBAIXA" => $MOTIUBAIXA, 
      "FK_COLLECCIO" => $FK_COLLECCIO, 
-     "FK_DEPARTAMENT" => htmlentities($FK_DEPARTAMENT),
+     "FK_DEPARTAMENT" => $FK_DEPARTAMENT,
      "FK_IDEDIT" => $FK_IDEDIT, 
-     "FK_LLENGUA" => $FK_LLENGUA, 
+     "FK_LLENGUA" => htmlentities($FK_LLENGUA), 
      "IMG_LLIB" => $IMG_LLIB
      );
 
@@ -106,9 +106,9 @@ $stmt->bind_result($COLLECCIO);
 $myFourthArray = array();
 
 while ($stmt->fetch()) {
-    $COL_ESCAPE = ereg_replace("\"","&quot;",$COLLECCIO);
+    $COL_ESCAPE = ereg_replace("\"","'",$COLLECCIO);
     $myFourthArray[] = array(
-        "COLLECCIO" => htmlentities($COL_ESCAPE)
+        "COLLECCIO" => $COL_ESCAPE
         );
 }
 
@@ -128,7 +128,7 @@ $myFifthArray = array();
 
 while ($stmt->fetch()) {
     $myFifthArray[] = array(
-        "DEPARTAMENT" => htmlentities($DEPARTAMENT)
+        "DEPARTAMENT" => $DEPARTAMENT
         );
 }
 
@@ -148,11 +148,11 @@ $mySixthArray = array();
 
 while ($stmt->fetch()) {
 
-    $COL_ESCAPE = ereg_replace("\"","&quot;",$NOM_EDIT);
+    $COL_ESCAPE = ereg_replace("\"","",$NOM_EDIT);
 
     $mySixthArray[] = array(
         "ID_EDIT" => $ID_EDIT,
-        "NOM_EDIT" => htmlentities($COL_ESCAPE)
+        "NOM_EDIT" => $COL_ESCAPE
         );
 }
 
@@ -173,7 +173,7 @@ $mySeventhArray = array();
 while ($stmt->fetch()) {
 
     $mySeventhArray[] = array(
-        "LLENGUA" => htmlentities($LLENGUA)
+        "LLENGUA" => $LLENGUA
         );
 }
 
