@@ -1,10 +1,12 @@
 <?php
 function conecta(){
 //conectarse a la base de datos
-return $mysqli = new mysqli("localhost", "root", "godevil90qwe", "biblioteca");
+$mysqli = new mysqli("localhost", "root", "godevil90qwe", "biblioteca");
 	if (mysqli_connect_errno()) {
 		printf("Error: %s\n", mysqli_connect_error()); exit();
 	}
+$mysqli->set_charset("utf8");
+return $mysqli;
 }
 
 function consulta($connexio, $sql){
