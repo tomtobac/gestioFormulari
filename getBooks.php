@@ -2,7 +2,7 @@
 require_once "funcions.php";
 $mysqli = conecta();
 
-$sql = "SELECT ID_LLIB, TITOL FROM LLIBRES ORDER BY ID_LLIB  LIMIT 0, 10";
+$sql = "SELECT ID_LLIB, TITOL FROM LLIBRES ORDER BY ID_LLIB  LIMIT 0, 20";
 
 $stmt = $mysqli->prepare($sql);
 
