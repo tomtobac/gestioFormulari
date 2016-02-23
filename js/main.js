@@ -7,10 +7,7 @@ $(window).load(function() {
 function init() {
     //$('.alert, .alert-danger').hide();
     $('#divModal').load('modal.html');
-    console.log($('#botoModal'));
 }
-
-
 
 function getBooks() {
     $.ajax({
@@ -51,6 +48,7 @@ function showBook(e) {
 }
 
 function getDataBook(ID_LLIBRE) {
+    cleanFormData();
     $.ajax({
             url: 'getDataBook.php',
             type: 'GET',
@@ -60,7 +58,6 @@ function getDataBook(ID_LLIBRE) {
         .done(function(data) {
             //console.log("success");
             //console.log($(data.LLIBRE));
-            cleanFormData();
             $.each(data.LLIBRE, function(index, el) {
                 $('#CodiLlibre').val(el.ID_LLIB);
                 $('#Titol').val(el.TITOL || '');
@@ -70,7 +67,6 @@ function getDataBook(ID_LLIBRE) {
                 $('#ISBN').val(el.ISBN || '');
                 $('#DepositLegal').val(el.DEPLEGAL || '');
                 $('#SigTop').val(el.SIGNTOP || '');
-                console.log(el.FK_COLLECCIO);
             });
             $.each(data.COLLECCIONS, function(index, el) {
                 //  <option value="1">Option one</option>
@@ -153,7 +149,7 @@ function getDataBook(ID_LLIBRE) {
             console.log("error");
         })
         .always(function() {
-            console.log("complete");
+            //console.log("complete");
         });
 }
 
@@ -169,6 +165,6 @@ function blockStuff(value) {
 }
 
 function saveDataForm() {
-	console.log("success");
+    //console.log("success");
     console.log($('#formLlibre').serialize());
 }
