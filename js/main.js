@@ -113,7 +113,7 @@ function getDataBook(ID_LLIBRE) {
                 row += '<td>' + el.NOM_AUT + '</td>';
                 row += '<td>' + el.DNAIX_AUT + '</td>';
                 row += '<td>' + el.FK_NACIONALITAT + '</td>';
-                row += '<td>';
+                row += '<td class=\'taulaEditar\'>';
                 row += '<button type="button" class="btn btn-danger btn-block" value=' + el.ID_AUT + '><span class="glyphicon glyphicon-trash"></span> Borrar</button>';
                 row += '</td>';
                 row += '</tr>'
@@ -127,7 +127,7 @@ function getDataBook(ID_LLIBRE) {
                 row += '<td>' + el.NREG + '</td>';
                 row += '<td>' + el.DATALTA_EXM + '</td>';
                 row += '<td>' + el.FK_UBICEXM + '</td>';
-                row += '<td>';
+                row += '<td class=\'taulaEditar\'>';
                 row += '<button type="button" class="btn btn-danger btn-block" value=' + el.NREG + '><span class="glyphicon glyphicon-trash"></span> Borrar</button>';
                 row += '</td>';
                 row += '</tr>'
@@ -138,6 +138,7 @@ function getDataBook(ID_LLIBRE) {
             $('#botoModal123').off("click").text("Editar");
             $('#botoModal123').on("click", function() {
                 blockStuff(false);
+                $('.taulaEditar').show();
                 $(this).text('Guardar');
                 $(this).off("click").on("click", function() {
                     saveDataForm();
@@ -162,9 +163,49 @@ function cleanFormData() {
 function blockStuff(value) {
     $("#myModal input, textarea, select").prop("disabled", value);
     $(".btn-danger").prop("disabled", value);
+    $('.taulaEditar').hide();
+    $('.alert').hide();
 }
 
 function saveDataForm() {
-    //console.log("success");
-    console.log($('#formLlibre').serialize());
+    //Validarem el formulari: Els camps obligatoris seran títol i any edició. Any edició ha d'esser numèric.
+    $.each($('.important'), function(index, el) {
+        if (!$(el).val()) {
+            $(el).parent().addClass("has-error");
+        } else {
+            $(el).parent().removeClass("has-error");
+        }
+    });
+    if ($('.has-error').length == 0) {
+        updateBook($('#formLlibre').serialize());
+    } else {
+        console.log("Hi ha errors.");
+    }
+}
+
+function updateBook(info) {
+    $.ajax({
+            url: 'setDataBook.php',
+            type: 'GET',
+            dataType: 'html',
+            data: info,
+        })
+        .done(function(data) {
+            console.log("success");
+            console.log(data);
+            //var x =  "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>";
+            $('#formAlert').html(data).show();
+            $("#myModal").animate({
+                scrollTop: 0
+            }, "slow");
+
+
+        })
+        .fail(function() {
+            console.log("error");
+        })
+        .always(function() {
+            console.log("complete");
+        });
+
 }
