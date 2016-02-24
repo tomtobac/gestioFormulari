@@ -180,9 +180,30 @@ while ($stmt->fetch()) {
 $LLENGUES = array('LLENGUES' => $mySeventhArray);
 
 
+// ==========================================================================// 
+//                                                           NOUSAUTORS      //        
+// ==========================================================================//  
+$sql = "SELECT ID_AUT, NOM_AUT, DNAIX_AUT, FK_NACIONALITAT FROM AUTORS ORDER BY NOM_AUT ASC";
 
+$stmt = $mysqli->prepare($sql);
+$stmt->execute();
+$stmt->bind_result($ID_AUT, $NOM_AUT, $DNAIX_AUT, $FK_NACIONALITAT);
 
-$result = array_merge($LLIBRE, $AUTORS, $EXEMPLARS, $COLLECCIONS, $DEPARTAMENTS, $EDITORS, $LLENGUES);
+$myEighthArray = array();
+
+while ($stmt->fetch()) {
+
+    $myEighthArray[] = array(
+        "ID_AUT" => $ID_AUT,
+        "NOM_AUT" => $NOM_AUT,
+        "DNAIX_AUT" => $DNAIX_AUT,
+        "FK_NACIONALITAT" => $FK_NACIONALITAT
+        );
+}
+
+$NOUSAUTORS = array('NOUSAUTORS' => $myEighthArray);
+
+$result = array_merge($LLIBRE, $AUTORS, $EXEMPLARS, $COLLECCIONS, $DEPARTAMENTS, $EDITORS, $LLENGUES, $NOUSAUTORS);
 echo json_encode($result);
 
 $stmt->close();
