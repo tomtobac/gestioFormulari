@@ -71,6 +71,8 @@ function getDataBook(ID_LLIBRE) {
             $('#DepositLegal').val(el.DEPLEGAL || '');
             $('#SigTop').val(el.SIGNTOP || '');
         });
+
+        /*
         $.each(data.COLLECCIONS, function(index, el) {
             //  <option value="1">Option one</option>
             $('#collecio').append($("<option></option>").attr("value", el.COLLECCIO).text(el.COLLECCIO));
@@ -78,6 +80,13 @@ function getDataBook(ID_LLIBRE) {
                 $('#collecio option:last').attr("selected", "selected");
             }
         });
+        */
+        $('#collecio').autocomplete({
+            source: "autoCompleteColleccio.php",
+            minLength: 2
+        });
+        $("#collecio").val(data.LLIBRE[0].FK_COLLECCIO);
+
         $.each(data.DEPARTAMENTS, function(index, el) {
             $('#Departament').append($("<option></option>").attr("value", el.DEPARTAMENT).text(el.DEPARTAMENT));
             if (data.LLIBRE[0].FK_DEPARTAMENT != null && data.LLIBRE[0].FK_DEPARTAMENT == el.DEPARTAMENT) {
