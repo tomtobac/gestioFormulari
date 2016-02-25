@@ -3,13 +3,25 @@
 
 <head>
     <meta charset="utf-8">
-    <title>jQuery UI Autocomplete - Default functionality</title>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-    <!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Proves</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+</head>
+
+<body>
+    <div class="ui-widget">
+        <label for="tags">Tags: </label>
+        <input id="tags" class="form-control">
+        <div id="tagsname"></div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
     <script>
-    $(function() {
+    $(window).load(function() {
+
         var availableTags = [
             "ActionScript",
             "AppleScript",
@@ -34,28 +46,21 @@
             "Scala",
             "Scheme"
         ];
+
         $("#tags").autocomplete({
-            source: availableTags,
+            source: "autoCompleteColleccio.php",
             minLength: 1,
             delay: 500,
             select: function() {
                 console.log('select' + $(this).val());
             }
         });
-        $("#tags").val("Java");
+        //$("#tags").val("Java");
         $('#tags').on('autocompletechange change', function() {
             $('#tagsname').html('You selected: ' + this.value);
         }).change();
     });
     </script>
-</head>
-
-<body>
-    <div class="ui-widget">
-        <label for="tags">Tags: </label>
-        <input id="tags">
-        <div id="tagsname"></div>
-    </div>
 </body>
 
 </html>

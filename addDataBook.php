@@ -23,6 +23,12 @@ if (isset($id_llib) && isset($id_autor)) {
     $stmt   = $mysqli->prepare($insert);
     $stmt->bind_param("iiss", $id_llib, $num_exm, $nreg, $data) or die($mysqli->error . __LINE__);
     $prompt = " l'exemplar a n'aquest llibre!";
+
+} else if (isset($nova_colleccio)) {
+    $insert = "INSERT INTO COLLECCIONS VALUES (?)";
+    $stmt   = $mysqli->prepare($insert);
+    $stmt->bind_param("s", $nova_colleccio) or die($mysqli->error . __LINE__);
+    $prompt = " La nova col·lecció, <strong>" . $nova_colleccio . "</strong>!";
 }
 
 if ($stmt->execute()) {

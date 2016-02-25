@@ -72,20 +72,21 @@ function getDataBook(ID_LLIBRE) {
             $('#SigTop').val(el.SIGNTOP || '');
         });
 
-        /*
-        $.each(data.COLLECCIONS, function(index, el) {
-            //  <option value="1">Option one</option>
-            $('#collecio').append($("<option></option>").attr("value", el.COLLECCIO).text(el.COLLECCIO));
-            if (data.LLIBRE[0].FK_COLLECCIO != null && data.LLIBRE[0].FK_COLLECCIO == el.COLLECCIO) {
-                $('#collecio option:last').attr("selected", "selected");
-            }
-        });
-        */
-        $('#collecio').autocomplete({
+
+        // $.each(data.COLLECCIONS, function(index, el) {
+        //     //  <option value="1">Option one</option>
+        //     $('#collecio').append($("<option></option>").attr("value", el.COLLECCIO).text(el.COLLECCIO));
+        //     if (data.LLIBRE[0].FK_COLLECCIO != null && data.LLIBRE[0].FK_COLLECCIO == el.COLLECCIO) {
+        //         $('#collecio option:last').attr("selected", "selected");
+        //     }
+        // });
+
+        $('#collecio123').autocomplete({
             source: "autoCompleteColleccio.php",
             minLength: 2
         });
-        $("#collecio").val(data.LLIBRE[0].FK_COLLECCIO);
+        $("#collecio123").autocomplete("option", "appendTo", "#formLlibre");
+        $("#collecio123").val(data.LLIBRE[0].FK_COLLECCIO);
 
         $.each(data.DEPARTAMENTS, function(index, el) {
             $('#Departament').append($("<option></option>").attr("value", el.DEPARTAMENT).text(el.DEPARTAMENT));
@@ -287,6 +288,14 @@ function buttonEditar() {
         saveDataForm();
         $('.alert').hide();
     });
+
+    $('#afegirNovaColleccio').click(function(e) {
+        var aux = $.trim($('#NovaCollecio').val());
+        if (aux.length > 0) {
+            addNovaColleccio(aux);
+        }
+        return false;
+    });
 }
 
 function addAutor(FK_IDLLIB, FK_IDAUT, NOM_AUT) {
@@ -383,4 +392,23 @@ function addExemplar(FK_IDLLIB, NUM_EXM, NREG, FK_UBICEXM, DATALTA_EXM) {
     }).fail(function() {
         console.log("error");
     }).always(function() {});
+}
+
+function addNovaColleccio(NovaCollecio) {
+    $.ajax({
+            url: 'addDataBook.php',
+            type: 'GET',
+            dataType: 'html',
+            data: { nova_colleccio: NovaCollecio },
+        })
+        .done(function(data) {
+            //console.log("success");
+            $('#novaColleccioAlert').html(data).show();
+        })
+        .fail(function() {
+            console.log("error");
+        })
+        .always(function() {
+            console.log("complete");
+        });
 }
