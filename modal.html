@@ -102,7 +102,7 @@
                                 <button id="afegirNovaColleccio" class="btn btn-warning">Afegir</button>
                             </div>
                             <div class="form-group col-md-6">
-                            <br>
+                                <br>
                                 <div id="novaColleccioAlert" class="alert alert-success">
                                 </div>
                             </div>
@@ -139,6 +139,28 @@
                 </table>
                 <div id="exemplarsAlert" class="alert alert-success">
                 </div>
+                <form id="afegirAutorNou" class="form-inline">
+                    <fieldset class="scheduler-border">
+                        <legend class="scheduler-border">Afegir Nou Autor</legend>
+                        <div class="row">
+                            <div class="form-group col-md-5">
+                                <label class="control-label" for="NOM_AUT">Nom Autor:</label>
+                                <input id="NOM_AUT" name="NOM_AUT" type="text" placeholder="NOM_AUT" class="form-control">
+                                </input>
+                            </div>
+                            <div class="form-group col-md-5">
+                                <label class="control-label" for="DNAIX_AUT">Data Naixament:</label>
+                                <input id="DNAIX_AUT" name="DNAIX_AUT" type="date" placeholder="DNAIX_AUT" class="form-control">
+                                </input>
+                            </div>
+                             <div class="form-group col-md-2">
+                                <br>
+                                <button id="enviarNouAutor" type="submit" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Afegir</button>
+                            </div>                           
+                        </div>
+                    </fieldset>
+                </form>
+                <br>
                 <table id="exemplarsModals" class="table table-striped table-bordered">
                     <tr>
                         <th>Examplar</th>

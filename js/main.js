@@ -71,8 +71,6 @@ function getDataBook(ID_LLIBRE) {
             $('#DepositLegal').val(el.DEPLEGAL || '');
             $('#SigTop').val(el.SIGNTOP || '');
         });
-
-
         // $.each(data.COLLECCIONS, function(index, el) {
         //     //  <option value="1">Option one</option>
         //     $('#collecio').append($("<option></option>").attr("value", el.COLLECCIO).text(el.COLLECCIO));
@@ -80,7 +78,6 @@ function getDataBook(ID_LLIBRE) {
         //         $('#collecio option:last').attr("selected", "selected");
         //     }
         // });
-
         $('#collecio123').autocomplete({
             source: "autoCompleteColleccio.php",
             minLength: 2
@@ -166,6 +163,7 @@ function cleanFormData() {
     $('option').remove();
     $('#myModal td').remove();
     $('.alert').hide();
+    $('#afegirAutorNou').hide();
 }
 
 function blockStuff(value) {
@@ -218,7 +216,7 @@ function deleteAutor(FK_IDLLIB, FK_IDAUT) {
         $('#autorsAlert').html(data).show();
         /*
         $("#myModal").animate({
-            scrollTop: 0
+        scrollTop: 0
         }, "slow");
         */
     }).fail(function() {
@@ -242,11 +240,11 @@ function deleteExemplar(FK_IDLLIB, NUM_EXM) {
         $('#exemplarsAlert').html(data).show();
         /*
         $("#myModal").animate({
-            scrollTop: 300
+        scrollTop: 300
         }, "slow");
         /*
-         * Actualitzam l'input d'Exemplar per afegir un nou exemplar.
-         */
+        * Actualitzam l'input d'Exemplar per afegir un nou exemplar.
+        */
         $.isNumeric(anterior) ? anterior++ : 1;
         //console.log(anterior);
         //console.log(lastExemplar);
@@ -258,17 +256,35 @@ function deleteExemplar(FK_IDLLIB, NUM_EXM) {
 }
 
 function buttonEditar() {
-    $('#autorsModal tr:last').after('<tr><td colspan="4"><select id="afegirAutor" name="nouAutor" class="form-control"></select></td><td class><button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-plus"></span> Afegir</button></td></tr>');
+    $('#afegirAutorNou').show();
+    $('#autorsModal tr:last').after('<tr><td colspan="4"><input value="1" type="number" name="nouAutor" id="afegirAutorHidden" hidden></input><input id="afegirAutor" class="form-control"></input></td><td class><button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-plus"></span> Afegir</button></td></tr>');
+
+    /*
     $.each(darreresDades.NOUSAUTORS, function(index, el) {
         $('#afegirAutor').append($("<option></option>").attr("value", el.ID_AUT).text(el.NOM_AUT));
     });
+    */
+
+    $('#afegirAutor').autocomplete({
+        source: "autoCompleteAutors.php",
+        minLength: 2,
+        select: function (event, ui) {
+            idAutor = ui.item.id;
+            //console.log(idAutor);
+            $("#afegirAutorHidden").val(idAutor);
+        }
+    });
+    $("#afegirAutor").autocomplete("option", "appendTo", "#autorsModal");
+
+
+
     var lastExemplar = $('#exemplarsModals tr:last td:first').text() || 0;
     lastExemplar++;
     $('#exemplarsModals tr:last').after('<tr><td><fieldset disabled><input type="number" value=' + lastExemplar + ' class="form-control"></fieldset></td><td><input type="number" class="form-control"></td><td><input type="date" class="form-control"></td><td><input type="text" class="form-control"></td><td class><button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-plus"></span> Afegir</button></td></tr>');
     $('#autorsModal .btn-success').click(function() {
-        var FK_IDAUT = $("#afegirAutor").val();
+        var FK_IDAUT = $("#afegirAutorHidden").val();
         var FK_IDLLIB = $('#CodiLlibre').val();
-        var NOM_AUT = $('#afegirAutor option:selected').text();
+        var NOM_AUT = $('#afegirAutor').val();
         console.log("send!");
         addAutor(FK_IDLLIB, FK_IDAUT, NOM_AUT);
     });
@@ -288,12 +304,17 @@ function buttonEditar() {
         saveDataForm();
         $('.alert').hide();
     });
-
     $('#afegirNovaColleccio').click(function(e) {
         var aux = $.trim($('#NovaCollecio').val());
         if (aux.length > 0) {
             addNovaColleccio(aux);
         }
+        return false;
+    });
+
+    $('#enviarNouAutor').off("click").on("click", function() {
+        var x = $('#afegirAutorNou').serialize();
+        addAutorNou(x);
         return false;
     });
 }
@@ -310,24 +331,24 @@ function addAutor(FK_IDLLIB, FK_IDAUT, NOM_AUT) {
     }).done(function(data) {
         //Afegir nou tr>td amb ses dades
         //console.log(darreresDades);
-        $.each(darreresDades.NOUSAUTORS, function(index, el) {
-            if (el.ID_AUT == FK_IDAUT) {
+        // $.each(darreresDades.NOUSAUTORS, function(index, el) {
+        //     if (el.ID_AUT == FK_IDAUT) {
                 //console.log("found it!");
                 var taula = $('#autorsModal .btn-success').parent().parent().prev();
                 var row;
                 row += '<tr>';
-                row += '<td>' + el.ID_AUT + '</td>';
-                row += '<td>' + el.NOM_AUT + '</td>';
-                row += '<td>' + el.DNAIX_AUT + '</td>';
-                row += '<td>' + el.FK_NACIONALITAT + '</td>';
+                row += '<td>' + FK_IDAUT + '</td>';
+                row += '<td>' + NOM_AUT + '</td>';
+                row += '<td> - </td>';
+                row += '<td> - </td>';
                 row += '<td class=\'taulaEditar\'>';
-                row += '<button type="button" class="btn btn-danger btn-block" value=' + el.ID_AUT + '><span class="glyphicon glyphicon-trash"></span> Borrar</button>';
+                row += '<button type="button" class="btn btn-danger btn-block" value=' + FK_IDAUT + '><span class="glyphicon glyphicon-trash"></span> Borrar</button>';
                 row += '</td>';
                 row += '</tr>'
                 taula.after(row);
                 //console.log(row);
-            }
-        });
+        //     }
+        // });
         $('#autorsModal button').click(function() {
             var FK_IDAUT = $(this).val();
             var FK_IDLLIB = $('#CodiLlibre').val();
@@ -337,7 +358,7 @@ function addAutor(FK_IDLLIB, FK_IDAUT, NOM_AUT) {
         //
         $('#autorsAlert').html(data).show();
         /*$("#myModal").animate({
-            scrollTop: 0
+        scrollTop: 0
         }, "slow");
         */
     }).fail(function() {
@@ -361,7 +382,6 @@ function addExemplar(FK_IDLLIB, NUM_EXM, NREG, FK_UBICEXM, DATALTA_EXM) {
         //Afegir nou tr>td amb ses dades
         //console.log(darreresDades);
         //isset($id_llib) && isset($num_exm) && isset($nreg) && isset($data) && isset($fk_ubicexm)
-
         //console.log("found it!");
         var taula = $('#exemplarsModals .btn-success').parent().parent().prev();
         var row;
@@ -375,18 +395,15 @@ function addExemplar(FK_IDLLIB, NUM_EXM, NREG, FK_UBICEXM, DATALTA_EXM) {
         row += '</td>';
         row += '</tr>'
         taula.after(row);
-
         $('#exemplarsModals button').click(function() {
             var NUM_EXM = $(this).val();
             var FK_IDLLIB = $('#CodiLlibre').val();
             deleteExemplar(FK_IDLLIB, NUM_EXM);
         });
-
         $('#exemplarsModals input:first').val(parseInt(NUM_EXM) + 1);
-
         $('#exemplarsAlert').html(data).show();
         /*$("#myModal").animate({
-            scrollTop: 0
+        scrollTop: 0
         }, "slow");
         */
     }).fail(function() {
@@ -411,4 +428,19 @@ function addNovaColleccio(NovaCollecio) {
         .always(function() {
             console.log("complete");
         });
+}
+
+
+function addAutorNou(PARAM) {
+    $.ajax({
+        url: 'addAutor.php',
+        type: 'GET',
+        dataType: 'html',
+        data: PARAM,
+    }).done(function(data) {
+        console.log(data);
+        $('#autorsAlert').html(data).show();
+    }).fail(function() {
+        console.log("error");
+    }).always(function() {});
 }

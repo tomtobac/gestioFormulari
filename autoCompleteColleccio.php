@@ -7,7 +7,9 @@ $cadena = "select colleccio as value from COLLECCIONS where colleccio
 $q     = $c->query($cadena);
 $taula = array();
 while($row = $q -> fetch_assoc()){
-    $taula[] = array_map('utf8_encode', $row);
+	//$value = htmlentities($row);
+	//	echo $row["colleccio"];
+    $taula[] = $row;
 }
 header('Content-type: application/json');
 echo json_encode($taula);
