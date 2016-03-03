@@ -268,7 +268,7 @@ function buttonEditar() {
     $('#afegirAutor').autocomplete({
         source: "autoCompleteAutors.php",
         minLength: 2,
-        select: function (event, ui) {
+        select: function(event, ui) {
             idAutor = ui.item.id;
             //console.log(idAutor);
             $("#afegirAutorHidden").val(idAutor);
@@ -331,24 +331,42 @@ function addAutor(FK_IDLLIB, FK_IDAUT, NOM_AUT) {
     }).done(function(data) {
         //Afegir nou tr>td amb ses dades
         //console.log(darreresDades);
-        // $.each(darreresDades.NOUSAUTORS, function(index, el) {
-        //     if (el.ID_AUT == FK_IDAUT) {
-                //console.log("found it!");
-                var taula = $('#autorsModal .btn-success').parent().parent().prev();
-                var row;
-                row += '<tr>';
-                row += '<td>' + FK_IDAUT + '</td>';
-                row += '<td>' + NOM_AUT + '</td>';
-                row += '<td> - </td>';
-                row += '<td> - </td>';
-                row += '<td class=\'taulaEditar\'>';
-                row += '<button type="button" class="btn btn-danger btn-block" value=' + FK_IDAUT + '><span class="glyphicon glyphicon-trash"></span> Borrar</button>';
-                row += '</td>';
-                row += '</tr>'
-                taula.after(row);
-                //console.log(row);
-        //     }
-        // });
+
+        if (NOM_AUT = $('#NOM_AUT').val()) {
+            var dataNaixament = $('#DNAIX_AUT').val();
+            var taula = $('#autorsModal .btn-success').parent().parent().prev();
+            var row;
+
+            row += '<tr>';
+            row += '<td>' + FK_IDAUT + '</td>';
+            row += '<td>' + NOM_AUT + '</td>';
+            row += '<td>' + dataNaixament +'</td>';
+            row += '<td> - </td>';
+            row += '<td class=\'taulaEditar\'>';
+            row += '<button type="button" class="btn btn-danger btn-block" value=' + FK_IDAUT + '><span class="glyphicon glyphicon-trash"></span> Borrar</button>';
+            row += '</td>';
+            row += '</tr>'
+            taula.after(row);
+        } else {
+            $.each(darreresDades.NOUSAUTORS, function(index, el) {
+                if (el.ID_AUT == FK_IDAUT) {
+                    //console.log("found it!");
+                    var taula = $('#autorsModal .btn-success').parent().parent().prev();
+                    var row;
+
+                    row += '<tr>';
+                    row += '<td>' + el.ID_AUT + '</td>';
+                    row += '<td>' + el.NOM_AUT + '</td>';
+                    row += '<td>' + el.DNAIX_AUT +'</td>';
+                    row += '<td> - </td>';
+                    row += '<td class=\'taulaEditar\'>';
+                    row += '<button type="button" class="btn btn-danger btn-block" value=' + FK_IDAUT + '><span class="glyphicon glyphicon-trash"></span> Borrar</button>';
+                    row += '</td>';
+                    row += '</tr>'
+                    taula.after(row);
+                }
+            });
+        }
         $('#autorsModal button').click(function() {
             var FK_IDAUT = $(this).val();
             var FK_IDLLIB = $('#CodiLlibre').val();
