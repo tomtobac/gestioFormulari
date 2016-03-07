@@ -256,8 +256,12 @@ function deleteExemplar(FK_IDLLIB, NUM_EXM) {
 }
 
 function buttonEditar() {
-    $('#afegirAutorNou').show();
-    $('#autorsModal tr:last').after('<tr><td colspan="4"><input value="1" type="number" name="nouAutor" id="afegirAutorHidden" hidden></input><input id="afegirAutor" class="form-control"></input></td><td class><button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-plus"></span> Afegir</button></td></tr>');
+    
+    $('#autorsModal tr:last').after('<tr><td colspan="3"><input value="1" type="number" name="nouAutor" id="afegirAutorHidden" hidden></input><input id="afegirAutor" class="form-control"></input></td><td class><button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-plus"></span> Afegir</button></td><td><button type="button" class="btn btn-warning btn-block btn-block" id="btnNouAutor"><span class="glyphicon glyphicon-plus"></span> Nou Autor</button></td></tr>');
+
+    $('#btnNouAutor').click(function(){
+        $('#afegirAutorNou').toggle();
+    })
 
     /*
     $.each(darreresDades.NOUSAUTORS, function(index, el) {
