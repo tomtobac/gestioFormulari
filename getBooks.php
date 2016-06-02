@@ -14,8 +14,8 @@ $myArray = array();
 while ($stmt->fetch()) {
 	//$TITOL = addslashes($TITOL);
     $myArray[] = array(
-    	"ID_LLIB" => $ID_LLIB, 
-    	"TITOL" => htmlentities($TITOL)
+    	"ID_LLIB" => $ID_LLIB,
+    	"TITOL"   => htmlentities($TITOL)
     	);
 }
 echo json_encode($myArray);

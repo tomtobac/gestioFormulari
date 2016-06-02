@@ -5,9 +5,9 @@ $ID_LLIB = $_REQUEST['ID_LLIB'];
 $mysqli  = conecta();
 
 
-// ==========================================================================// 
-//                                                           LLIBRE          //        
-// ==========================================================================//  
+// ==========================================================================//
+//                                                           LLIBRE          //
+// ==========================================================================//
 $sql = "SELECT ID_LLIB, TITOL, NUMEDICIO, ANYEDICIO, LLOCEDICIO, DESCRIP_LLIB, ISBN, DEPLEGAL, SIGNTOP, DATBAIXA_LLIB, MOTIUBAIXA, FK_COLLECCIO, FK_DEPARTAMENT, FK_IDEDIT, FK_LLENGUA, IMG_LLIB LLIBRES FROM LLIBRES WHERE ID_LLIB = ?";
 
 $stmt = $mysqli->prepare($sql);
@@ -15,37 +15,37 @@ $stmt->bind_param("i", $ID_LLIB) or die($mysqli->error . __LINE__);
 $stmt->execute();
 $stmt->bind_result($ID_LLIB, $TITOL, $NUMEDICIO, $ANYEDICIO, $LLOCEDICIO, $DESCRIP_LLIB, $ISBN, $DEPLEGAL, $SIGNTOP, $DATBAIXA_LLIB, $MOTIUBAIXA, $FK_COLLECCIO, $FK_DEPARTAMENT, $FK_IDEDIT, $FK_LLENGUA, $IMG_LLIB);
 
-$myArray = array();
+$arrayTemporal = array();
 
 while ($stmt->fetch()) {
 
-    $myArray[] = array(
-     "ID_LLIB" => $ID_LLIB,
-     "TITOL" => htmlentities($TITOL), 
-     "NUMEDICIO" => $NUMEDICIO,
-     "LLOCEDICIO" => htmlentities($LLOCEDICIO), 
-     "ANYEDICIO" => $ANYEDICIO, 
-     "DESCRIP_LLIB" => htmlentities($DESCRIP_LLIB), 
-     "ISBN" => $ISBN, 
-     "DEPLEGAL" => $DEPLEGAL, 
-     "SIGNTOP" => $SIGNTOP, 
-     "DATBAIXA_LLIB" => $DATBAIXA_LLIB, 
-     "MOTIUBAIXA" => $MOTIUBAIXA, 
-     "FK_COLLECCIO" => $FK_COLLECCIO, 
+    $arrayTemporal[] = array(
+     "ID_LLIB"        => $ID_LLIB,
+     "TITOL"          => htmlentities($TITOL),
+     "NUMEDICIO"      => $NUMEDICIO,
+     "LLOCEDICIO"     => htmlentities($LLOCEDICIO),
+     "ANYEDICIO"      => $ANYEDICIO,
+     "DESCRIP_LLIB"   => htmlentities($DESCRIP_LLIB),
+     "ISBN"           => $ISBN,
+     "DEPLEGAL"       => $DEPLEGAL,
+     "SIGNTOP"        => $SIGNTOP,
+     "DATBAIXA_LLIB"  => $DATBAIXA_LLIB,
+     "MOTIUBAIXA"     => $MOTIUBAIXA,
+     "FK_COLLECCIO"   => $FK_COLLECCIO,
      "FK_DEPARTAMENT" => $FK_DEPARTAMENT,
-     "FK_IDEDIT" => $FK_IDEDIT, 
-     "FK_LLENGUA" => htmlentities($FK_LLENGUA), 
-     "IMG_LLIB" => $IMG_LLIB
+     "FK_IDEDIT"      => $FK_IDEDIT,
+     "FK_LLENGUA"     => htmlentities($FK_LLENGUA),
+     "IMG_LLIB"       => $IMG_LLIB
      );
 
 }
 
-$LLIBRE = array('LLIBRE' => $myArray);
+$LLIBRE = array('LLIBRE' => $arrayTemporal);
 
 
-// ==========================================================================// 
-//                                                           AUTORS          //        
-// ==========================================================================//  
+// ==========================================================================//
+//                                                           AUTORS          //
+// ==========================================================================//
 $sql = "SELECT ID_AUT, NOM_AUT, DNAIX_AUT, FK_NACIONALITAT, IMG_AUT FROM AUTORS JOIN LLI_AUT ON ID_AUT = FK_IDAUT WHERE FK_IDLLIB = ?";
 
 $stmt = $mysqli->prepare($sql);
@@ -53,24 +53,24 @@ $stmt->bind_param("i", $ID_LLIB) or die($mysqli->error . __LINE__);
 $stmt->execute();
 $stmt->bind_result($ID_AUT, $NOM_AUT, $DNAIX_AUT, $FK_NACIONALITAT, $IMG_AUT);
 
-$mySecondArray = array();
+$arrayTemporal = array();
 
 while ($stmt->fetch()) {
-    $mySecondArray[] = array(
-        "ID_AUT" => $ID_AUT,
-        "NOM_AUT" => $NOM_AUT,
-        "DNAIX_AUT" => $DNAIX_AUT,
+    $arrayTemporal[] = array(
+        "ID_AUT"          => $ID_AUT,
+        "NOM_AUT"         => $NOM_AUT,
+        "DNAIX_AUT"       => $DNAIX_AUT,
         "FK_NACIONALITAT" => $FK_NACIONALITAT,
-        "IMG_AUT" => $IMG_AUT
+        "IMG_AUT"         => $IMG_AUT
         );
 }
 
-$AUTORS = array('AUTORS' => $mySecondArray);
+$AUTORS = array('AUTORS' => $arrayTemporal);
 
 
-// ==========================================================================// 
-//                                                        EXEMPLARS          //        
-// ==========================================================================//  
+// ==========================================================================//
+//                                                        EXEMPLARS          //
+// ==========================================================================//
 $sql = "SELECT FK_IDLLIB, NUM_EXM, NREG, FK_UBICEXM, DATALTA_EXM, ORIGEN_EXM FROM EXEMPLARS WHERE FK_IDLLIB = ?";
 
 $stmt = $mysqli->prepare($sql);
@@ -78,24 +78,24 @@ $stmt->bind_param("i", $ID_LLIB) or die($mysqli->error . __LINE__);
 $stmt->execute();
 $stmt->bind_result($FK_IDLLIB, $NUM_EXM, $NREG, $FK_UBICEXM, $DATALTA_EXM, $ORIGEN_EXM);
 
-$myThirdArray = array();
+$arrayTemporal = array();
 
 while ($stmt->fetch()) {
-    $myThirdArray[] = array(
-        "FK_IDLLIB" => $FK_IDLLIB,
-        "NUM_EXM" => $NUM_EXM,
-        "NREG" => $NREG,
-        "FK_UBICEXM" => $FK_UBICEXM,
+    $arrayTemporal[] = array(
+        "FK_IDLLIB"   => $FK_IDLLIB,
+        "NUM_EXM"     => $NUM_EXM,
+        "NREG"        => $NREG,
+        "FK_UBICEXM"  => $FK_UBICEXM,
         "DATALTA_EXM" => $DATALTA_EXM,
-        "ORIGEN_EXM" => $ORIGEN_EXM
+        "ORIGEN_EXM"  => $ORIGEN_EXM
         );
 }
 
-$EXEMPLARS = array('EXEMPLARS' => $myThirdArray);
+$EXEMPLARS = array('EXEMPLARS' => $arrayTemporal);
 
-// ==========================================================================// 
-//                                                      COLLECCIONS          //        
-// ==========================================================================//  
+// ==========================================================================//
+//                                                      COLLECCIONS          //
+// ==========================================================================//
 
 $sql = "SELECT COLLECCIO FROM COLLECCIONS ORDER BY COLLECCIO";
 
@@ -103,105 +103,105 @@ $stmt = $mysqli->prepare($sql);
 $stmt->execute();
 $stmt->bind_result($COLLECCIO);
 
-$myFourthArray = array();
+$arrayTemporal = array();
 
 while ($stmt->fetch()) {
-    $COL_ESCAPE = ereg_replace("\"","'",$COLLECCIO);
-    $myFourthArray[] = array(
+    $COL_ESCAPE      = ereg_replace("\"","'",$COLLECCIO);
+    $arrayTemporal[] = array(
         "COLLECCIO" => $COL_ESCAPE
         );
 }
 
-$COLLECCIONS = array('COLLECCIONS' => $myFourthArray);
+$COLLECCIONS = array('COLLECCIONS' => $arrayTemporal);
 
 
-// ==========================================================================// 
-//                                                      DEPARTAMENTS         //        
-// ==========================================================================//  
+// ==========================================================================//
+//                                                      DEPARTAMENTS         //
+// ==========================================================================//
 $sql = "SELECT DEPARTAMENT FROM DEPARTAMENTS ORDER BY DEPARTAMENT";
 
 $stmt = $mysqli->prepare($sql);
 $stmt->execute();
 $stmt->bind_result($DEPARTAMENT);
 
-$myFifthArray = array();
+$arrayTemporal = array();
 
 while ($stmt->fetch()) {
-    $myFifthArray[] = array(
+    $arrayTemporal[] = array(
         "DEPARTAMENT" => $DEPARTAMENT
         );
 }
 
-$DEPARTAMENTS = array('DEPARTAMENTS' => $myFifthArray);
+$DEPARTAMENTS = array('DEPARTAMENTS' => $arrayTemporal);
 
 
-// ==========================================================================// 
-//                                                           EDITORS         //        
-// ==========================================================================//  
+// ==========================================================================//
+//                                                           EDITORS         //
+// ==========================================================================//
 $sql = "SELECT ID_EDIT, NOM_EDIT FROM EDITORS ORDER BY ID_EDIT";
 
 $stmt = $mysqli->prepare($sql);
 $stmt->execute();
 $stmt->bind_result($ID_EDIT, $NOM_EDIT);
 
-$mySixthArray = array();
+$arrayTemporal = array();
 
 while ($stmt->fetch()) {
 
     $COL_ESCAPE = ereg_replace("\"","",$NOM_EDIT);
 
-    $mySixthArray[] = array(
-        "ID_EDIT" => $ID_EDIT,
+    $arrayTemporal[] = array(
+        "ID_EDIT"  => $ID_EDIT,
         "NOM_EDIT" => $COL_ESCAPE
         );
 }
 
-$EDITORS = array('EDITORS' => $mySixthArray);
+$EDITORS = array('EDITORS' => $arrayTemporal);
 
 
-// ==========================================================================// 
-//                                                           LLENGUES        //        
-// ==========================================================================//  
+// ==========================================================================//
+//                                                           LLENGUES        //
+// ==========================================================================//
 $sql = "SELECT LLENGUA FROM LLENGUES ORDER BY LLENGUA";
 
 $stmt = $mysqli->prepare($sql);
 $stmt->execute();
 $stmt->bind_result($LLENGUA);
 
-$mySeventhArray = array();
+$arrayTemporal = array();
 
 while ($stmt->fetch()) {
 
-    $mySeventhArray[] = array(
+    $arrayTemporal[] = array(
         "LLENGUA" => $LLENGUA
         );
 }
 
-$LLENGUES = array('LLENGUES' => $mySeventhArray);
+$LLENGUES = array('LLENGUES' => $arrayTemporal);
 
 
-// ==========================================================================// 
-//                                                           NOUSAUTORS      //        
-// ==========================================================================//  
+// ==========================================================================//
+//                                                           NOUSAUTORS      //
+// ==========================================================================//
 $sql = "SELECT ID_AUT, NOM_AUT, DNAIX_AUT, FK_NACIONALITAT FROM AUTORS ORDER BY NOM_AUT ASC";
 
 $stmt = $mysqli->prepare($sql);
 $stmt->execute();
 $stmt->bind_result($ID_AUT, $NOM_AUT, $DNAIX_AUT, $FK_NACIONALITAT);
 
-$myEighthArray = array();
+$arrayTemporal = array();
 
 while ($stmt->fetch()) {
 
-    $myEighthArray[] = array(
-        "ID_AUT" => $ID_AUT,
-        "NOM_AUT" => $NOM_AUT,
-        "DNAIX_AUT" => $DNAIX_AUT,
+    $arrayTemporal[] = array(
+        "ID_AUT"          => $ID_AUT,
+        "NOM_AUT"         => $NOM_AUT,
+        "DNAIX_AUT"       => $DNAIX_AUT,
         "FK_NACIONALITAT" => $FK_NACIONALITAT
         );
 }
 
-$NOUSAUTORS = array('NOUSAUTORS' => $myEighthArray);
+$NOUSAUTORS = array('NOUSAUTORS' => $arrayTemporal);
 
 $result = array_merge($LLIBRE, $AUTORS, $EXEMPLARS, $COLLECCIONS, $DEPARTAMENTS, $EDITORS, $LLENGUES, $NOUSAUTORS);
 echo json_encode($result);

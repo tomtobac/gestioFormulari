@@ -2,9 +2,7 @@
 require_once "funcions.php";
 $mysqli = conecta();
 
-/*
- * GET ALL DATA FROM REQUEST {OP WAY}
- */
+//GET ALL DATA FROM REQUEST {OP WAY}
 foreach ($_REQUEST as $key => $value) {
     ${$key} = !empty($_REQUEST[$key]) ? $value : null;
     //echo $key . " : " . ${$key} . "<br>";
@@ -13,8 +11,7 @@ foreach ($_REQUEST as $key => $value) {
 if (isset($id_llib) && isset($id_autor)) {
 
     $insert = "INSERT INTO LLI_AUT VALUES ( ?, ?, NULL)";
-    //echo $insert;
-    $stmt = $mysqli->prepare($insert);
+    $stmt   = $mysqli->prepare($insert);
     $stmt->bind_param("ii", $id_llib, $id_autor) or die($mysqli->error . __LINE__);
     $prompt = " l'autor a n'aquest llibre!";
 
