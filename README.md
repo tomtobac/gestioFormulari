@@ -1,6 +1,8 @@
 # Gestio Formulari
 
-Edit book from a list with AJAX/jQuery/HTML/Bootstrap
+Edició de un llibre d'un llistat amb AJAX/jQuery/HTML/Bootstrap
+
+Veure descripció de la tasca: --> ExMantFormulari.pdf
 
 ------
 [DAWPES] - Manteniment amb un formulari. Fitxer
